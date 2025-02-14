@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import SectionWrapper from "./SectionWrapper";
-import { WORKOUTS } from "../utils/swoldier";
+import { WORKOUTS,SCHEMES } from "../utils/swoldier";
 
 function Header(props) {
   const { index, title, description } = props;
@@ -17,6 +17,11 @@ function Header(props) {
   );
 }
 export default function Generator() {
+  const [showModal, setShowModal] = useState(false);
+
+  const ToggleModal = () => {
+    setShowModal(!showModal);
+  };
   return (
     <SectionWrapper
       header={"generate yor workout"}
@@ -36,7 +41,41 @@ export default function Generator() {
               }
               key={index}
             >
-              <p>{workout}</p>
+              <p className="capitalize">{workout.replace("_", " ")}</p>
+            </button>
+          );
+        })}
+      </div>
+      <Header
+        index={"02"}
+        title={"Lock on Targets"}
+        description={"Select the muscles judged for annihilation."}
+      />
+      <div className="bg-slate-950  border border-solid border-rose-400 rounded-lg flex flex-col">
+        <button
+          onClick={() => ToggleModal()}
+          className="relative  p-3 flex items-center justify-center"
+        >
+          <p>Select muscles group</p>
+          <i className="fa-solid absolute right-3 top-1/2 -translate-y-1/2 fa-caret-down"></i>
+        </button>
+        {showModal && <div>Modal</div>}
+      </div>
+      <Header
+        index={"03"}
+        title={"Become Juggernaut"}
+        description={"Select your ultimate objective."}
+      />
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        {Object.keys(SCHEMES).map((scheme, schemeIndex) => {
+          return (
+            <button
+              className={
+                "bg-slate-950 border  duration-200 hover:border-blue-600 py-3 rounded-lg px-4 "
+              }
+              key={schemeIndex}
+            >
+              <p className="capitalize">{scheme.replaceAll("_", " ")}</p>
             </button>
           );
         })}
